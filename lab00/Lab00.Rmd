@@ -18,9 +18,9 @@ This will prevent some headaches later
 
 ![](images/r_global_options.png){width="485"}
 
-### 3. Save this file as `lab00.Rmd`
+### 3. Save this file
 
-`File > Save`
+`File > Save` or click the little save icon in the toolbar
 
 ### 4. Write and run some code
 
@@ -56,9 +56,9 @@ First, at the top of this file, look at the "front matter" that looks like this:
 
 ![](images/front_matter.png)
 
-Edit where it says "YOUR NAME HERE" to... your actual name.
+Edit where it says "YOUR NAME HERE" to... your actual name. There are many other things you can do in this "front matter" but we'll start simple.
 
-Then just click the "Knit" button in the toolbar, which will open a window with the rendered file:
+**Then just click the "Knit" button in the toolbar**, which will open a window with the rendered file:
 
 ![](images/r_knit_button.png){width="341"}
 
@@ -66,7 +66,7 @@ You'll see a more "presentable" version of the document, like this:
 
 ![](images/knitted_example.png){width="364"}
 
-**Notice, in RStudio, you'll now have a `lab00.pdf`** file:
+**Notice, in RStudio, you'll now have a `Lab00.pdf`** file:
 
 In the bottom-right `Files` pane:
 
@@ -86,7 +86,7 @@ Click the Gear ("More") icon in the `Files` pane toolbar and select `Export`
 
 **Submit on Gradescope**
 
--   FIRST TIME ONLY - go to bCourses and click "Gradescope" on the left sidebar. This will get you set up and logged in. From then on, you can just click the link on the course home page (below).
+-   FIRST TIME ONLY - go to bCourses for thic class, then click "Gradescope" on the left sidebar. This will get you set up and logged in. From then on, you can just click the link on the course home page (below).
 
 -   Log into Gradescope (course homepage \> click "Gradescope")
 
@@ -96,4 +96,6 @@ Click the Gear ("More") icon in the `Files` pane toolbar and select `Export`
 
 -   Fill out the form and upload your pdf
 
-## **You're done with Lab 00! Don't forget the other assignment due tonight, the pre-course survey (see website)**
+## **You're done with Lab 00!**
+
+## **Don't forget the other assignment due tonight, the pre-course survey (see website)**
