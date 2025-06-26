@@ -13,4 +13,38 @@ author: "YOUR NAME HERE"
 
 ## Load libraries
 
+## Load data
+
 ## Explore and clean
+
+Sample and slice
+
+Drop username column
+
+Plot, factorize, then replot 'drinks' data
+
+Break down by male/female
+
+Is any age data missing?
+
+Add boolean "under_30" column, break down drinking this way.
+
+Plot income data, then fix -1s to NA
+
+Fill body type missing data with "NOT GIVEN"
+
+Plot height data, add vlines for 5 and 6 ft
+
+Change sign column to just keep first word - function - strsplit - sapply
+
+Joining
+
+EDAs - group_by / summarize
+
+-   sign vs diet
+
+-   sign vs drugs
+
+-   age vs drugs
+
+-   Explore on your own - report back interesting finding or two
