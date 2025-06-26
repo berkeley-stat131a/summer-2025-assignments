@@ -13,23 +13,127 @@ author: "YOUR NAME HERE"
 
 ## Load libraries
 
+```{r}
+library(tidyverse)
+```
+
 ## Load data
+
+```{r}
+okc = read_csv("data/okcupid.csv")
+```
 
 ## Explore and clean
 
 Sample and slice
 
+```{r}
+okc |>
+  slice(1:5)
+```
+
+```{r}
+okc |>
+  slice_sample(prop = 0.1)
+```
+
 Drop username column
+
+```{r}
+okc |>
+  select(age, ethnicity)
+```
+
+```{r}
+okc = okc |>
+  select(-username)
+```
+
+```{r}
+okc = okc |>
+  rename(relationship_status = status)
+```
 
 Plot, factorize, then replot 'drinks' data
 
+```{r}
+okc |>
+  group_by(drinks) |>
+  summarize(num_people = n(), mean_age = mean(age))
+```
+
+```{r}
+okc |>
+  ggplot(aes(y = drinks)) +
+  geom_bar()
+```
+
+```{r}
+NA
+```
+
+```{r}
+drinking_order = c(
+    "not at all",
+    "rarely",
+    "socially",
+    "often",
+    "very often",
+    "desperately")
+okc = okc |>
+  mutate(drinks = factor(drinks, levels=drinking_order))
+```
+
+```{r}
+okc |>
+  drop_na(drinks) |>
+  ggplot(aes(y = drinks)) +
+  geom_bar()
+```
+
 Break down by male/female
+
+```{r}
+okc |>
+  ggplot(aes(y = sex, fill=drinks)) +
+  geom_bar(position = "fill", color="black")
+```
 
 Is any age data missing?
 
+```{r}
+colSums(is.na(okc))
+```
+
 Add boolean "under_30" column, break down drinking this way.
 
+```{r}
+okc = okc |>
+  mutate(under_30 = age < 30)
+```
+
+```{r}
+okc |>
+  drop_na(drinks) |>
+  ggplot(aes(y = under_30, fill=drinks)) +
+  geom_bar(position = "fill")
+```
+
 Plot income data, then fix -1s to NA
+
+```{r}
+okc = okc |>
+  mutate(income = if_else(income == -1, NA, income))
+```
+
+```{r}
+okc |>
+  drop_na(income) |>
+  group_by(income) |>
+  summarize(n=n()) |>
+  ggplot(aes(x=income, y=n)) +
+  geom_col()
+```
 
 Fill body type missing data with "NOT GIVEN"
 
