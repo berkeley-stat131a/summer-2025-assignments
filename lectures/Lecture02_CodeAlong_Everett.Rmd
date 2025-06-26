@@ -1,0 +1,163 @@
+---
+title: "Lecture02_CodeAlong"
+output: html_document
+---
+
+## Outline:
+
+-   tidyverse, ggplot, dplyr
+
+-   Demo of plot types
+
+-   Tweaking plots
+
+-   Using PingPongLLM for help
+
+-   dplyr to filter, change, group, and summarize data
+
+## Libraries at the top, always
+
+```{r}
+library(tidyverse)
+```
+
+## Load data
+
+```{r}
+df = read_csv("data/class_survey_simplified.csv")
+```
+
+## Get get work
+
+```{r}
+df |>
+  ggplot(aes(x=comfort_coding)) +
+  geom_bar()
+
+```
+
+```{r}
+df |>
+  filter(language == "Python") |>
+  filter(major == "econ") |>
+  select(comfort_coding, comfort_math)
+```
+
+```{r}
+x = 4
+x == 4
+TRUE + TRUE + FALSE + TRUE
+```
+
+```{r}
+df |>
+  ggplot(aes(x=comfort_coding, fill = language)) +
+  geom_bar(position = "dodge")
+```
+
+```{r}
+df |>
+  ggplot(aes(x=comfort_coding, y=comfort_math, color=language)) +
+  geom_jitter(width=0.1, height=0.1, size=5, alpha=0.5)
+```
+
+```{r}
+df |>
+  ggplot(aes(x=fake_score, y=language, fill=language)) +
+  geom_violin()
+```
+
+```{r}
+df |>
+  ggplot(aes(y=major, fill=major)) +
+  labs(
+    y = "Major",
+    x = "Number of students",
+    title = "Stat c131a students by major"
+  ) +
+  geom_bar()
+# ggsave("major_bars.png")
+```
+
+## `dplyr` - `group_by` and `summarize`
+
+```{r}
+df |>
+  group_by(language) |>
+  summarize(
+    num_students = n(),
+    mean_math = mean(comfort_math),
+    mean_coding = mean(comfort_coding))
+```
+
+You can pipe this straight to ggplot. Note the use of `geom_col` here as we are explicitly setting the y value, while `geom_bar` sets the y to be "the number of rows with this x value"
+
+```{r}
+df |>
+  group_by(language) |>
+  summarize(
+    num_students = n(),
+    mean_math = mean(comfort_math),
+    mean_coding = mean(comfort_coding)) |>
+  ggplot(aes(x=language, y=num_students)) +
+  geom_col()
+```
+
+```{r}
+df |>
+  summarize(
+    n_python = sum(language == "Python"),
+    n_r = sum(language == "R"))
+```
+
+## Tinkering with a built-in dataset
+
+```{r}
+data(Loblolly)
+```
+
+```{r}
+trees = Loblolly
+```
+
+```{r}
+trees |>
+  ggplot(aes(x=age, y=height, color=Seed)) +
+  geom_line()
+```
+
+```{r}
+trees |>
+  group_by(age) |>
+  summarize(mean_height = mean(height))
+```
+
+### Another built-in dataset
+
+```{r}
+ucb = as.data.frame(UCBAdmissions)
+```
+
+```{r}
+ucb |>
+  group_by(Gender, Admit) |>
+  summarize(n = sum(Freq))
+```
+
+```{r}
+ucb |>
+  group_by(Gender, Admit) |>
+  summarize(n = sum(Freq)) |>
+  group_by(Gender) |>
+  mutate(fraction = n / sum(n))
+```
+
+```{r}
+ucb |>
+  group_by(Gender, Admit) |>
+  summarize(n = sum(Freq)) |>
+  group_by(Gender) |>
+  mutate(fraction = n / sum(n)) |>
+  ggplot(aes(x=Gender, y=fraction, fill=Admit)) +
+  geom_col()
+```
