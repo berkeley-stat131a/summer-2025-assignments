@@ -1,7 +1,7 @@
 ---
 title: "Lab 00"
-output: html_document
-author: "YOUR NAME HERREREREE"
+output: pdf_document
+author: "YOUR NAME HERE"
 ---
 
 ### 1. Get acquainted with RStudio

@@ -135,20 +135,57 @@ okc |>
   geom_col()
 ```
 
-Fill body type missing data with "NOT GIVEN"
-
 Plot height data, add vlines for 5 and 6 ft
+
+```{r}
+okc |>
+  filter(height > 50) |>
+  filter(sex == "m") |>
+  ggplot(aes(x = height)) +
+  geom_bar() +
+  geom_vline(xintercept=60) +
+  geom_vline(xintercept=72)
+```
 
 Change sign column to just keep first word - function - strsplit - sapply
 
+```{r}
+get_first_word = function(s) {
+  return(str_split(s, " ")[[1]][1])
+}
+
+okc = mutate(okc, sign = sapply(sign, get_first_word))
+```
+
+```{r}
+str_split("one two three", " ")[[1]][1]
+```
+
 Joining
 
-EDAs - group_by / summarize
+```{r}
+signs = read_csv('data/signs.csv')
+signs= signs |>
+  rename(sign = Sign,
+         birth_range = BirthRange) |>
+  mutate(sign = tolower(sign))
+```
 
--   sign vs diet
+```{r}
+okc = left_join(okc, signs, by="sign")
+```
 
--   sign vs drugs
+```{r}
+okc |>
+  group_by(sex) |>
+  summarize(gave_sign = 1 - mean(is.na(sign)))
+```
 
--   age vs drugs
-
--   Explore on your own - report back interesting finding or two
+```{r}
+okc |>
+  drop_na(sign, sex) |>
+  group_by(sex, sign) |>
+  summarize(mean_age = mean(age)) |>
+  ggplot(aes(y = sign, x = mean_age, fill=sex)) +
+  geom_col(position="dodge")
+```
