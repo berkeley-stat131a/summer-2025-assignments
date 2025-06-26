@@ -1,0 +1,16 @@
+---
+title: "Lecture03_CodeAlong"
+output: pdf_document
+author: "YOUR NAME HERE"
+---
+
+## Get the data
+
+1.  Go to <https://data.world/wetchler/okcupid-profiles-sf-20120630>
+2.  Find the "download" button
+3.  Rename the csv to `okcupid.csv`
+4.  Upload it to the `data/` folder here ('import' button in Files pane)
+
+## Load libraries
+
+## Explore and clean
