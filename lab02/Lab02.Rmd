@@ -96,7 +96,7 @@ YOUR CODE HERE
 *In our dataset, the column about your major is a clear candidate for a factor. First, run the cell below to see what kind of data is in the `major` column (or whatever you renamed that column to). This code is regular old R, nothing to do with `forcats`*
 
 ```{r}
-class(students$major)
+#class(students$major)
 ```
 
 *It should say "character" meaning that it is a string of characters (letters, numbers, spaces, etc)*
@@ -111,7 +111,9 @@ YOUR CODE HERE
 
 *Now run the cell below to see what has changed*
 
-YOUR CODE HERE
+```{r}
+#class(students$major)
+```
 
 *It should say "factor" now. Check out the "levels" of the factor - the values they can take, and their order. Run this cell.*
 

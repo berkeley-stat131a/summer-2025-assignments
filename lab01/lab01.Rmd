@@ -1,7 +1,7 @@
 ---
 title: "Lab 01 - Data visualization"
 author: "YOUR NAME HERE"
-output: html_document
+output: pdf_document
 ---
 
 # Key Resources for this lab
@@ -25,9 +25,7 @@ library(tidyverse)
 
 **NOTE: Each row in the dataframe is one instance of a police officer stopping someone on the street in New York City. Sometimes, the officer suspects that something is up, and pats the person down looking for weapons or drugs (this is called a "frisk"). Other times, officers stop someone to talk, but don't frisk them.**
 
-```{r}
-stops = read_csv("data/nyc_stops_subset.csv")
-```
+YOUR CODE HERE
 
 **Q1-2: Inspect the dataframe:**
 
@@ -78,10 +76,6 @@ data(Orange)
 ```
 
 **Q2-1: What do the rows and columns in this dataset mean? Hint: for built-in datasets like this, you can often get useful information by running `?[dataset name]`. Run the cell below, and look in the bottom-right panel in RStudio for the help information.**
-
-```{r}
-?Orange
-```
 
 YOUR ANSWER HERE
 

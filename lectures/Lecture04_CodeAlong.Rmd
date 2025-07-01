@@ -1,0 +1,87 @@
+---
+title: "Lecture04_CodeAlong.Rmd"
+output: pdf_document
+date: "2025-07-01"
+---
+
+```{r}
+#| message: false
+library(tidyverse)
+```
+
+```{r}
+#| message: false
+coins = read_csv('data/coins.csv')
+coins = coins |>
+  mutate(
+    coin = recode(coin, "Regular coin (a nickel)" = "nickel"),
+    coin = recode(coin, "CIRCLE furniture mover thingy" = "circle"),
+    coin = recode(coin, "SQUARE furniture mover thingy" = "square"))
+```
+
+```{r}
+coins |>
+  ggplot(aes(x = coin, fill = coin)) +
+  geom_bar()
+```
+
+```{r}
+coins |>
+  group_by(coin) |>
+  summarize(mean = mean(heads))
+```
+
+```{r}
+coins |>
+  filter(coin == "nickel") |>
+  summarize(mean(heads <= 5 | heads >= 15)) # | means "or"
+```
+
+```{r}
+coins |>
+  filter(coin == "nickel") |>
+  ggplot(aes(x = heads)) +
+  geom_bar() +
+  geom_vline(xintercept = 15, color="red") +
+  geom_vline(xintercept = 11, color="blue")
+```
+
+```{r}
+coin = c("Heads", "Tails")
+sample(coin, 20, replace=T)
+```
+
+```{r}
+
+die = 1:6
+sample(die, 100, replace=T)
+```
+
+```{r}
+results = rbinom(100000, 20, 0.5)
+data.frame(results) |>
+  ggplot(aes(x = results)) +
+  geom_bar()
+```
+
+```{r}
+norm_draws = rnorm(1000000, 10, sqrt(10 * 0.5 * 0.5))
+data.frame(norm_draws) |>
+  ggplot(aes(x=norm_draws)) +
+  geom_density()
+```
+
+```{r}
+results = rbinom(10000, 2, 0.5)
+data.frame(results) |>
+  ggplot(aes(x = results)) +
+  geom_bar()
+```
+
+```{r}
+data.frame(
+  nheads = 0:20,
+  p = dbinom(0:20, 20, 0.5)) |>
+  ggplot(aes(x=nheads, y=p)) +
+  geom_col()
+```
