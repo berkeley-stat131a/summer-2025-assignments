@@ -14,7 +14,7 @@ YOUR CODE HERE
 
 #### A2: Load the file in `data/okcupid_cleaned_sample.csv` into a dataframe called `okc`. Print the number of rows it has (use `nrow`).
 
-*Note: this is a 1% sample of the okcupid data, after I've cleaned it up. This makes the statistical tests more interesting, as the original dataset is so big that pretty much everything is significant, even if small (remember our conversation on "power"?).*
+*Note: this is a 1% sample of the okcupid data, after I've cleaned it up. First, this is more realistic, because in most research studies you don't get tens of thousands of participants - you get at most a few hundred. This also makes practicing statistical tests more interesting, as the original dataset is so big that pretty much every difference is significant, even if it's small (remember our conversation on "power"?).*
 
 YOUR CODE HERE
 
