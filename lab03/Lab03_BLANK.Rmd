@@ -1,0 +1,117 @@
+---
+title: "Lab 03"
+output: pdf_document
+author: "YOUR NAME HERE"
+---
+
+## Part A - Setup
+
+#### A0: First, change the author name above (where it says `YOUR NAME HERE`) to your name.
+
+#### A1: Load tidyverse in its own cell below, BUT also include the line `#| message: false` at the top (right after the `{r}` line, but before loading tidyverse). This prevents it from printing all the unnecessary text.
+
+YOUR CODE HERE
+
+#### A2: Load the file in `data/okcupid_cleaned_sample.csv` into a dataframe called `okc`. Print the number of rows it has (use `nrow`).
+
+*Note: this is a 1% sample of the okcupid data, after I've cleaned it up. This makes the statistical tests more interesting, as the original dataset is so big that pretty much everything is significant, even if small (remember our conversation on "power"?).*
+
+YOUR CODE HERE
+
+## Part B - Cat Ladies
+
+Note: This is old data from OKCupid, which only measured sex at birth, not gender. Hence, this is an examination of sex and its relation to pet ownership.
+
+#### There are some questions about pets on OKCupid – glance at the data and look at the colums `has_dogs`, `has_cats`, `likes_dogs`, and `likes_cats`. Also notice the `NA` values, meaning the person did not answer the question.
+
+#### B1: What fraction of people in our sample have cats? Only consider people who actually answered the question. (BONUS: use [`pull()`](https://www.statology.org/dplyr-pull/) to print just the final number, instead of a silly 1x1 dataframe)
+
+YOUR CODE HERE
+
+#### **B2:** Break this down by sex. What fraction of men and women have cats? (Don't forget to ignore people who didn't answer the question)
+
+YOUR CODE HERE
+
+#### **B3:** Make a horizontal bar plot showing the information from the previous step. Be sure to fix (or remove) things like axis labels, plot titles, and legends. Keep your plots clean and minimal, but still clear. (BONUS: use the `scales` library to turn the x axis tick marks into percentages instead of decimals)
+
+YOUR CODE HERE
+
+#### B4: It seems like there is a difference, on average, in how likely men and women are to have cats. But are we sure? We're just making a casual observation from some plots, not calculating a scientific statement. We now examine the *statistical significance* of this male-female difference (in cat ownership) using a permutation test. Complete the steps below:
+
+1.  State the null hypothesis
+2.  State your test statistic.
+3.  Write a function that takes a dataframe as its only argument and returns your test statistic.
+4.  Call this function once with the original dataset. Confirm that it is consistent with the results you saw in the question above (B1).
+5.  Simulate the null hypothesis by randomly shuffling the data in the `sex` column, then computing a test statistic on this new dataset (by calling your function). **Be sure not to overwrite the original dataset when you do this!**
+6.  Move this code into a function called `simulate_null_get_test_stat` (or whatever name you think is more intuitive). The function shouldn't need any arguments.
+7.  Use `rep` to run this function 1000 times to get a vector of 1000 test statistics, each representing one simulation of the null hypothesis and computing a test statistic. Be sure to save these 1000 numbers to a variable called `null_test_stats`.
+8.  What does this vector of numbers represent? Answer this question in simple language, as if you're explaining it to a friend who hasn't taken statistics.
+9.  Compute the test statistic on our real, original data, and save it to a variable called `observed_test_stat`
+10. Using the results from the two steps above, compute a p-value.
+11. Write a sentence that explains, in plain english, how to interpret your p-value. What does your number *literally* mean in terms of men, women, and cat ownership? Note: Your answer should NOT use the words "statistically significant" at all! You're just explaining what this number objectively says, not what meaning you make of it.
+
+YOUR ANSWERS AND CODE HERE - use multiple code cells as you go, don't put it all in one big ugly block!
+
+## Part C - Age and drinking behavior
+
+#### Do people drink less, or differently, as they get older? To simplify this problem, we'll divide people into an "older" and a "younger" group.
+
+#### C1: First, let's pick a dividing line. Find the median age of everyone in our dataset.
+
+YOUR CODE HERE
+
+#### C2: Add a column to the dataframe, called `age_group`, that is `"older"` for people whose age is greater than (or equal to) this median value, and `"younger"` for everyone else.
+
+YOUR CODE HERE
+
+#### C3: The `drinks` column has answers to the question about how often people drink. There are a fixed number of options. Make a quick bar plot showing how many people chose each option. No need to make it look nice at all, you're just quickly getting a sense of the data.
+
+YOUR CODE HERE
+
+#### C4: Since `drinks` has a fixed number of options, and they have a natural order (`not at all` \< `rarely` \< ...), convert this column into a factor. Be sure to set the levels to order them correctly, from least to most frequent drinking.
+
+YOUR CODE HERE
+
+#### C5: Plot your data again. The levels should appear in order, making for a more natural reading. In one sentence, how would you summarize how often people drink?
+
+#### C6: Do older or younger people drink more often?
+
+(This follows mostly the same steps as part B earlier)
+
+1.  State the null hypothesis
+2.  State your test statistic. THIS IS THE HARD PART - you can pick anything sensible, but simple averages won't work (the "drinks" question is categorical, not numerical). You can also simplify the problem in any way that makes sense - just justify your decision.
+3.  Write a function that takes a dataframe as its only argument and returns your test statistic.
+4.  Call this function once with the original dataset. Make sure the number looks correct.
+5.  Simulate the null hypothesis by randomly shuffling the data in the `age_group` column, then computing a test statistic (by calling your function). Be sure not to overwrite the original dataset!
+6.  Move this code into a function called `simulate_null_age`.
+7.  Use `rep` to run this function 1000 times to get a vector of 1000 test statistics, each representing one simulation of the null hypothesis. Be sure to save these 1000 numbers to a variable called `null_test_stats`
+8.  Using the results from the two steps above, compute a p-value
+9.  Write one sentence summarizing your finding, using the p-value. Don't mention "statistical significance" - just objectively describe what you found and what your number means.
+
+YOUR ANSWERS AND CODE HERE
+
+## Part D - R functions for random numbers and probability distributions
+
+**Logan goes into his physics midterm, but he has never gone to class or done any work. The midterm has 10 multiple choice questions, all with four answer options, but Logan has no clue which answer is right on any question. He just guesses randomly (so 25% chance to get a given question right).**
+
+**D1: When Logan guesses on a single question, and we see if he got it right, it's like a draw from what kind of distribution? What is the parameter of this distribution?**
+
+YOUR ANSWER HERE
+
+**D2: When Logan guesses on 10 such questions, and we count how many he got right, it's like a draw from what kind of distribution? What are the parameters?**
+
+YOUR ANSWER HERE
+
+**For the next few questions, [this tutorial](https://www.geeksforgeeks.org/r-language/a-guide-to-dbinom-pbinom-qbinom-and-rbinom-in-r/) may be helpful. If you get stuck, read that tutorial *before* you try using PingPong. This will help you retain it better!**
+
+**D3: Using R code, simulate Logan taking this midterm 1000 times. How often does he get a passing grade (60% or better)? (State your answer as a percentage).**
+
+YOUR CODE AND ANSWER HERE
+
+**D4: Using R code, calculate *exactly* the probability of Logan passing the midterm, *as a percentage*. Look at the tutorial link above if you need help.**
+
+YOUR CODE AND ANSWER HERE
+
+**D5: Suppose that, instead of 10 questions, the midterm only had 3 questions. Now what are Logan's chances of passing? Is this higher or lower than when the midterm had 10 questions? Why? Give an intuitive explanation.**
+
+YOUR CODE AND ANSWER HERE
