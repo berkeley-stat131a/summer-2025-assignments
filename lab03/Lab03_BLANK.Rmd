@@ -6,7 +6,7 @@ author: "YOUR NAME HERE"
 
 ## Part A - Setup
 
-#### A0: First, change the author name above (where it says `YOUR NAME HERE`) to your name.
+#### Q0: First, change the author name above (where it says `YOUR NAME HERE`) to your name.
 
 #### A1: Load tidyverse in its own cell below, BUT also include the line `#| message: false` at the top (right after the `{r}` line, but before loading tidyverse). This prevents it from printing all the unnecessary text.
 
