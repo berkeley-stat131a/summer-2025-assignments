@@ -44,7 +44,7 @@ YOUR CODE HERE
 4.  Call this function once with the original dataset. Confirm that it is consistent with the results you saw in the question above (B1).
 5.  Simulate the null hypothesis by randomly shuffling the data in the `sex` column, then computing a test statistic on this new dataset (by calling your function). **Be sure not to overwrite the original dataset when you do this!**
 6.  Move this code into a function called `simulate_once`. The function shouldn't need any arguments.
-7.  Use `rep` to run this function 1000 times to get a vector of 1000 test statistics, each representing one simulation of the null hypothesis and computing a test statistic. Be sure to save these 1000 numbers to a variable called `null_test_stats`.
+7.  Use `replicate` to run this function 1000 times to get a vector of 1000 test statistics, each representing one simulation of the null hypothesis and computing a test statistic. Be sure to save these 1000 numbers to a variable called `null_test_stats`.
 8.  What does this vector of numbers represent? Answer this question in simple language, as if you're explaining it to a friend who hasn't taken statistics.
 9.  Compute the test statistic on our real, original data, and save it to a variable called `observed_test_stat`
 10. Using the results from the two steps above, compute a p-value.
@@ -84,7 +84,7 @@ YOUR CODE HERE
 4.  Call this function once with the original dataset. Make sure the number looks correct.
 5.  Simulate the null hypothesis by randomly shuffling the data in the `age_group` column, then computing a test statistic (by calling your function). Be sure not to overwrite the original dataset!
 6.  Move this code into a function called `simulate_once_age`.
-7.  Use `rep` to run this function 1000 times to get a vector of 1000 test statistics, each representing one simulation of the null hypothesis. Be sure to save these 1000 numbers to a variable called `null_test_stats`
+7.  Use `replicate` to run this function 1000 times to get a vector of 1000 test statistics, each representing one simulation of the null hypothesis. Be sure to save these 1000 numbers to a variable called `null_test_stats`
 8.  Using the results from the two steps above, compute a p-value
 9.  Write one sentence summarizing your finding, using the p-value. Don't mention "statistical significance" - just objectively describe what you found and what your number means.
 
