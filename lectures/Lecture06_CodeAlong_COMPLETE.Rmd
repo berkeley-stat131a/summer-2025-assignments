@@ -1,0 +1,75 @@
+---
+title: "Lecture06 CodeAlong"
+output: pdf_document
+---
+
+```{r}
+library(tidyverse)
+```
+
+```{r}
+pnorm(-2)
+pnorm(2)
+pnorm(2) - pnorm(-2)
+```
+
+```{r}
+yawns = c(0, 1, 0, 0, 0)
+mean(yawns)
+```
+
+```{r}
+boot_samples = replicate(1000, mean(sample(yawns, replace=T)))
+data.frame(nyawn = boot_samples) |>
+    ggplot(aes(x=nyawn)) +
+    geom_bar()
+```
+
+```{r}
+sum(boot_samples < 0.5) / length(boot_samples)
+```
+
+```{r}
+# mean(okc$height)
+boot_means = replicate(10000, mean(sample(okc$height, replace=T)))
+mean(boot_means < 68.5)
+```
+
+```{r}
+pnorm
+qnorm # kind of the inverse of pnorm
+```
+
+```{r}
+qnorm(.05)
+qnorm(0.95)
+```
+
+```{r}
+pnorm(-1.64)
+pnorm(1.64)
+```
+
+```{r}
+result = factor(0:20)
+p = dbinom(0:20, 20, 0.5)
+data.frame(result, p) |>
+    ggplot(aes(x=result, y=p)) +
+    geom_col()
+```
+
+```{r}
+results = rbinom(10000, 20, 0.5)
+data.frame(results) |>
+    group_by(results) |>
+    summarize(n = n()) |>
+    ggplot(aes(x=results, y=n)) + geom_col()
+    
+```
+
+```{r}
+# 90% Confidence Interval
+# 5%ile and 95%ile
+qbinom(.05, 20, 0.5)
+qbinom(.95, 20, 0.5)
+```
