@@ -1,0 +1,96 @@
+---
+title: "Lab03 Setup"
+output: pdf_document
+---
+
+```{r}
+#| message: false
+library(tidyverse)
+```
+
+```{r}
+okc = read_csv('data/okcupid_raw.csv')
+okc = okc |>
+    select(-c(username, last_online, location)) |>
+    mutate(income = na_if(income, -1)) |>
+    mutate(across(where(is.character), ~ str_replace_all(., "&rsquo;", "'")),
+           sex = recode(sex, "m" = "male"),
+           sex = recode(sex, "f" = "female")) |>
+    extract(
+        diet,
+        into = "diet_intensity",
+        regex = "(strictly|mostly)?.*",
+        remove = FALSE) |>
+    extract(
+        diet,
+        into = "diet",
+        regex = "(?:strictly|mostly)?\\s?(.*)",
+        remove = FALSE) |>
+    mutate(diet = na_if(diet, ""),
+           diet_intensity = na_if(diet_intensity, "")) |>
+    mutate(
+        has_dogs = if_else(is.na(pets), NA, str_detect(pets, "has dogs")),
+        has_cats = if_else(is.na(pets), NA, str_detect(pets, "has cats")),
+        likes_dogs = case_when(
+          is.na(pets) ~ NA,
+          str_detect(pets, "dislikes dogs") ~ FALSE,
+          str_detect(pets, "likes dogs|has dogs") ~ TRUE,
+          TRUE ~ NA
+        ),
+        likes_cats = case_when(
+          is.na(pets) ~ NA,
+          str_detect(pets, "dislikes cats") ~ FALSE,
+          str_detect(pets, "likes cats|has cats") ~ TRUE,
+          TRUE ~ NA
+        )) |>
+    select(-c(pets)) |>
+    extract(
+        religion,
+        into = "religion_intensity",
+        regex = "(?:.*(?:and|but)\\s+)?(.*)\\s+about it",
+        remove = FALSE) |>
+    mutate(religion_intensity = na_if(religion_intensity, "")) |>
+    extract(
+        religion,
+        into = "religion",
+        regex = "(\\w+).*",
+        remove = FALSE) |>
+    mutate(religion = na_if(religion, "")) |>
+    extract(
+        sign,
+        into = "sign_intensity",
+        regex = "\\w+\\s+(?:(?:and|but)\\s+)?(.*)",
+        remove = FALSE) |>
+    extract(
+        sign,
+        into = "sign",
+        regex = "(\\w+).*",
+        remove = FALSE) |>
+    mutate(sign_intensity = na_if(sign_intensity, ""),
+           sign = na_if(sign, "")) |>
+    extract(
+        education,
+        into = "education_progress",
+        regex = "(graduated from|working on).*",
+        remove = FALSE) |>
+    extract(
+        education,
+        into = "education_type",
+        regex = "(?:graduated from|working on)?\\s?(.*)",
+        remove = TRUE) |>
+    mutate(education_type = na_if(education_type, ""),
+           education_progress = na_if(education_progress, "")) |>
+    mutate(has_kids = str_detect(offspring, "^has (kids|a kid)"),
+           has_kids = ifelse(!is.na(offspring) & !has_kids, F, has_kids)) |>
+    relocate(has_kids, .after = offspring)
+
+
+okc |>
+    write_csv('data/okcupid_cleaned_full.csv')
+
+for (pct in c(1, 5, 10)) {
+    okc |>
+        slice_sample(prop = pct/100) |>
+        write_csv(paste0('data/okcupid_cleaned_sample_', pct, 'pct.csv'))
+}
+```
