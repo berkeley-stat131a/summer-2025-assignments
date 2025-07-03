@@ -1,0 +1,180 @@
+---
+title: "Lab 04"
+output: pdf_document
+author: "YOUR NAME HERE"
+---
+
+## Setup
+
+1.  Change the author name above (where it says `YOUR NAME HERE`)
+2.  Add a cell below to load `tidyverse` and run it. Up to you if you want to add the `#| message: false` line to hide the unnecessary output.
+
+## Notes
+
+In R, remember that many probability distributions have four core functions available using a consistent naming scheme:
+
+-   `r*` for **r**andom draws from the distribution
+-   `d*` for **d**ensity (or PMF for discrete)
+-   `p*` for CDF (**p**robability of getting a value up to x)
+-   `q*` for "**q**uantile function" - reverse of `p*` - what number would give me a CDF of x?
+
+Below are some of the distributions in R most useful to us (though there are many more):
+
+| Distribution | Suffix  | Type       | Parameters      |
+|--------------|---------|------------|-----------------|
+| Binomial     | `binom` | discrete   | `n` and `p`     |
+| Normal       | `norm`  | continuous | `mean` and `sd` |
+| Uniform      | `unif`  | continuous | `min` and `max` |
+| Student's t  | `t`     | continuous | `df`            |
+| F            | `f`     | continuous | `df1` and `df2` |
+| Chi-Squared  | `chisq` | continuous | `df`            |
+
+As you know, all of these distributions are *parametric* - they take parameters that affect their shape. Meaning that each of these is actually a whole family of probability distributions. The normal distribution, for example, is defined by its *mean* and *standard deviation*, so there are actually many different "normal" curves. Any time you call a function like `rnorm` you have to give it these parameters so it knows what shape of normal distribution to use.
+
+## Rolling two dice
+
+You're going to create a new random variable that represents rolling *two* fair 6-sided dice and adding them up.
+
+#### ?# Probabilities
+
+If you roll two 6 sided dice and add them up, you'll get a total somewhere between 2 (if both rolls are `1`) and 12 (if both rolls are `6`). Note that not all totals are equally likely - you can only get a total of 2 one way (`1` `1`) but you can get a total of 3 two ways (`1` `2` or `2` `1`), a total of 4 three ways (`1` `3` or `2` `2` or `3` `1`), etc.
+
+First, write down the probabilities of getting every possible total between 2 and 12 (they won't all be equally likely!). Use fractions like `1/36`, not its ugly decimal form (`0.027777`).
+
+YOUR ANSWER HERE **AS A TABLE** (To do this, look the the menu bar, a bit down and to the right of "Knit" there's a button that says "Table")
+
+#### ?# PMF
+
+A. Turn your table into a dataframe called `twodice_probs` with two columns: `total` and `p`.
+
+YOUR CODE HERE
+
+B. Then use that dataframe to draw the PMF of your new variable. (Hint: use `geom_col`)
+
+YOUR CODE HERE
+
+#### ?# Write a function called `roll_two_dice_once` that returns a random roll result, with appropriate probabilities
+
+There are many ways to implement this, but you could consider using `sample` two times (each "rolling" one die) and add them up.
+
+YOUR CODE HERE (don't forget a return statement!)
+
+#### ?# What is the expected value and variance of your new random variable? Write code to calculate them from the values in your `twodice_probs` table.
+
+YOUR CODE HERE
+
+#### ?# Now you're going to turn this into a fully-fledged R random variable, with functions similar to `rnorm` and `dnorm`. First, write a function `rtwodice` that takes one argument: `size`.
+
+This is to keep it in line with things like `rnorm` and `rbinom` which always have a `size` argument, which has the usual meaning of "how many times should I do this? For example, when you are done, calling `rtwodice(10)` should return a vector of 10 numbers, each between 2 and 12 (not all equally likely!) representing a fair roll of two standard dice.
+
+Hint: you can either use `replicate` on your existing function (`roll_two_dice_once`) or write a `for` loop to build up the results in a vector.
+
+YOUR CODE HERE
+
+#### ?# Generate 1000 random rolls of two dice using your `rtwodice` function. Plot their frequency as a bar chart.
+
+There's many ways to display this information, so think about it. It may help to draw, on paper, what you want the result to look like before trying to write code.
+
+YOUR CODE HERE
+
+#### ?# Multiple plots, side by side
+
+Sometimes you want to show a bunch of plots all together in a single figure. Here, we'll be showing your random results of rolling dice (above) to the true pmf (which you also drew, further above).
+
+To do this, we'll be using the `patchwork` library (which will become a staple in your toolkit).
+
+?# Scroll up to your first cell where you loaded `tidyverse`. Write code to also load `patchwork` and run the cell so that it's loaded. (*NOTE: THIS IS HOW YOU SHOULD ALWAYS WORK. All your libraries should be in one cell at the top. Whenever you realize you need another library, scroll up, add it, and run the cell.*)
+
+?# You have code (from previous questions) to make a plot of your PMF and your randomly-generated data. Copy that code into a single cell below, but modify it to *save the result of each to a variable*. (e.g. `p1 = mydata |> ggplot...` and `p2 = mydata |> ggplot...`). Run the cell. You don't see anything right? Now add the line `p1 + p2` to the end of the cell and run it. You should see both plots side-by-side
+
+YOUR CODE HERE
+
+#### ?# Playing with `patchwork`
+
+You can do goofy stuff with patchwork. Everytime you put a `+` in the formula, it puts those things side-by-side. Everytime you put `/` it starts a new row of plots. Things in parentheses are grouped together. First, run the two cells below to get the idea. (Note: you may have to change the code if you used different variable names, which is totally fine)
+
+```{r}
+p1/p2
+```
+
+```{r}
+# Note: we'd probably never draw the same plot (p1 here) multiple times in real life,
+# but this is just for understanding patchwork.
+(p1 + p2) / p1
+```
+
+#### ?# To get a better feel for what's possible, make a few other weird plots (just combinations of p1 and p2).
+
+See if you can get at least 3 rows with variable numbers of plots in each row. Or even somethign crazier. Keep going until you think you get the hang of `patchwork`
+
+YOUR CODE HERE
+
+#### ?# Fleshing out our new random variable: write the function `dtwodice`
+
+In addition to generating random numbers with functions like `rnorm` and `rbinom`, we can also find the probabilities (or densities) of getting specific results with `dnorm` and `dbinom`. Write such a function for your new variable, called `dtwodice`. It takes one argument (call it `x` or whatever you like) and returns the probability of rolling two dice and getting the total `x`.
+
+Note: There are many ways to do this. It doesn't take much code, but it's a little tricky. A few ideas: consider looking up values in your dataframe of probabilities (you'll have to use `pull()` to get the final value out as a regular number) OR make a list with named components to directly look up probabilities (see #2 [here](https://www.geeksforgeeks.org/r-language/r-lists/)).
+
+YOUR CODE HERE
+
+#### ?# Improving `dtwodice`
+
+You may remember that functions like `dbinom` can actually compute a bunch of things at once. Suppose you want to know the chances of getting (each of) exactly 2, 3, and 4 heads in a series of 5 coin flips. Yes, you *could* call `dbinom(2, 5, 0.5)`, then `dbinom(3, 5, 0.5)`, then `dbinom(4, 5, 0.5)`, but this gets ugly and repetitive in a hurry.
+
+Luckily, `dbinom` is ready for this, and you can actually do `dbinom(c(2,3,4), 5, 0.5)` and it will give you back a vector of 3 numbers, answering all your questions at once. (Or, more succinctly, `dbinom(2:4, 5, 0.5)` since `2:4` is just shorthand for `c(2,3,4)`)
+
+Let's upgrade your `dtwodice` to allow this behavior. Leaving your old code alone, rewrite your `dtwodice` function below. Hint: start with an empty vector (`c()`) and use a `for` loop over all the values in `x`, adding to your vector each time.
+
+YOUR CODE HERE
+
+#### ?# Write the function `ptwodice`
+
+Like `pnorm` and `pbinom`, it takes one argument (`x`) and returns the probability of rolling two dice and getting a total up to (and including) `x`. For example, `ptwodice(3)` should return `0.08333333` (3/36). This may seem tricky, but now that you have `dtwodice`, you can do this in one line of code!
+
+YOUR CODE HERE
+
+#### ?# BONUS (kinda hard): Write the function `qtwodice`. This takes a quantile (like `0.75`, meaning the 75th percentile) and returns the total that has `ptwodice` closest to that value.
+
+YOUR CODE HERE (BONUS)
+
+#### ?# `rmanydice`
+
+Finally, you're going to write code to represent throwing arbitrarily many (6-sided) dice at the same time, and adding the up. Write a function `rmanydice` that takes two arguments: `size` and `ndice` where `ndice` is the number of 6-sided dice to roll (and add up), and `size` is the usual "how many times should I do this?"
+
+Examples of how it should work:
+
+-   `rmanydice(10, 1)` should return a vector of 10 numbers, each between 1 and 6 (all equally likely) representing a fair roll of one standard die.
+
+-   `rmanydice(5, 2)` should do exactly the same thing as `rtwodice(5)`, returning a vector of 5 numbers, each between 2 and 12 (*not* all equally likely), representing rolling *two* fair 6-sided dice and adding up their numbers.
+
+-   `rmanydice(100, 3)` should return a vector of 100 numbers, each between 3 and 18 (*not* all equally likely), representing rolling *three* fair 6-sided dice and adding up their numbers.
+
+-   ...you get the idea
+
+YOUR CODE HERE
+
+#### ?# Many dice, many plots
+
+Let's bring it all together now.
+
+You're going to use your new function (`rmanydice`) to see what happens when you roll more and more dice at once. You're going to make FOUR plots, arranged in a 2x2 grid in the same figure (using `patchwork`).
+
+Plot 1: Simulate rolling ONE die 10000 times, and plot the distribution of results.
+
+Plot 2: Simulate rolling TWO dice 10000 times and adding them up, and plot the distribution of results.
+
+Plot 3: Simulate rolling FIVE dice 10000 times and adding them up, and plot the distribution of results.
+
+Plot 4: Simulate rolling TWENTY dice 10000 times and adding them up, and plot the distribution of results.
+
+Use `patchwork` to put them all together in one figure, a 2x2 grid of plots.
+
+Improve the plots to make them easy to interpret. You can do this several ways, so tap your inner artist/communicator. You could add titles, for starters, but you could also have the bars be red in one plot, blue in another, etc.
+
+YOUR CODE HERE
+
+#### ?# Last question
+
+What do you notice about the plots as you include more and more dice? Is there a distribution they start to resemble?
+
+YOUR ANSWER HERE
