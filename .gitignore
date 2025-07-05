@@ -12,3 +12,9 @@ venv/
 .RHistory
 # Files and folders explicitly marked to not be checked in
 *NOCHECKIN*
+
+# Solutions to assignments that aren't released yet
+*Lab01_Solution*
+*Lab02_Solution*
+*Lab03_Solution*
+*Lab04_Solution*

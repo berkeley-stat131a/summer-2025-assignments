@@ -1,0 +1,20 @@
+id,duck,comfort_code,comfort_math,classes_data,classes_stat,language,year,major,tv,fake_score
+A,1,2,3,"DATA C104, DATA C88C",STAT 155,R,4,bio,Fleabag,0.95
+B,1,2,4,"DATA 8, DATA C88C",NA,Python,4,Other,White Lotus,0.04
+C,1,4,3,NA,STAT 20,R,4,Other,"Attack on Titan, Bojack Horseman",0.71
+D,2,3,3,"DATA 8, DATA C88C, DATA C88S, DATA C104",NA,R,4,econ,The Boondocks,0.04
+E,3,1,1,DATA 8,NA,Python,4,Other,Gilmore Girls,0.18
+F,4,2,3,"DATA 8, DATA C88C",STAT 133,R,4,cogsci,Adolescence,0.11
+G,4,2,1,"DATA 8, DATA C88C","STAT 88
+STAT 133",Python,4,econ,"Adventure Time, Mo",0.04
+H,5,1,3,DATA 8,"STAT 20
+STAT 133",Python,4,Other,Better Call Saul,0.97
+J,5,4,4,"DATA 8, DATA C88S, DATA C104",STAT 133,R,3,econ,Breaking Bad,0.63
+K,5,3,2,"DATA 8, DATA 100",STAT 133,Python,3,bio,Peaky Blinders,0.61
+M,6,3,3,DATA 8,STAT133,Python,4,bio,Avatar the Last Airbender,0.29
+N,6,4,2,"DATA C88C, DATA C104",STAT 20,R,4,cogsci,major crimes,0.32
+P,7,3,3,"DATA C8, DATA C88C, DATA C88S, DATA 198","STAT 20
+STAT 133",Python,4,econ,csi: las vegas,0.11
+Q,8,5,4,"DATA 8, DATA C104, DATA C100, DATA C140, DATA 144, DATA C101",STAT20,Python,3,cogsci,NA,0.64
+R,8,3,4,DATA 8,NA,R,4,bio,Parks and Rec,0.39
+S,9,3,2,"DATA 8, DATA C88C, DATA C88S",STAT 20,Python,4,econ,"New Girl, Brooklyn Nine-Nine, Attack on Titan",0.71
